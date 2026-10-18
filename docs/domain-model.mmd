@@ -58,7 +58,7 @@ classDiagram
         offer_status
     }
 
-    LoanOfficer "1" --> "0..*" Borrower : assigned_to
+    LoanOfficer "0..1" --> "0..*" Borrower : assigned_to
     Borrower "1" --> "1..*" Loan : owns
     Loan "1" --> "1..*" LoanPayment : has
     Loan "1" --> "0..*" Delinquency : records
