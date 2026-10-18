@@ -1,0 +1,70 @@
+classDiagram
+    direction TB
+
+    class LoanOfficer {
+        officer_id
+        name
+    }
+
+    class Borrower {
+        borrower_id
+        name
+    }
+
+    class Conversation {
+        start_date
+    }
+
+    class Message {
+        sender
+        text
+        time_sent
+    }
+
+    class Loan {
+        loan_id
+        balance
+        minimum_payment
+    }
+
+    class LoanPayment {
+        payment_id
+        amount_due
+        amount_paid
+        due_date
+        payment_date
+        payment_status
+    }
+
+    class Delinquency {
+        delinquency_id
+        delinquency_status
+        start_date
+        resolved_date
+        days_past_due
+    }
+
+    class RepaymentPlan {
+        new_monthly_amount
+        term_length
+        start_date
+        end_date
+        plan_status
+    }
+
+    class IncentiveOffer {
+        reduced_minimum_amount
+        expiration_date
+        offer_status
+    }
+
+    LoanOfficer "1" --> "0..*" Borrower : assigned_to
+    Borrower "1" --> "1..*" Loan : owns
+    Loan "1" --> "1..*" LoanPayment : has
+    Loan "1" --> "0..*" Delinquency : records
+    Loan "1" --> "0..1" RepaymentPlan : covered_by
+    RepaymentPlan "1" --> "0..1" IncentiveOffer : includes
+    LoanOfficer "1" --> "0..*" RepaymentPlan : manages
+    Borrower "1" --> "0..1" Conversation : takes_part_in
+    LoanOfficer "1" --> "0..*" Conversation : takes_part_in
+    Conversation "1" --> "0..*" Message : contains
