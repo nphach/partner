@@ -33,9 +33,13 @@ public class RepaymentPlan {
     /**
      * Creates a temporary reduced-payment offer if the borrower is eligible (R2).
      *
-     * @throws IllegalStateException if the borrower is not eligible
+     * @throws IllegalStateException if the plan already has an offer (fixes D2),
+     *                               or the borrower is not eligible
      */
     public IncentiveOffer generateIncentiveOffer(LocalDate createdOn) {
+        if (incentiveOffer != null) {
+            throw new IllegalStateException("Plan already has an incentive offer");
+        }
         if (!IncentiveOffer.checkEligibility(loan.getBorrower(), this)) {
             throw new IllegalStateException("Borrower is not eligible for an incentive offer");
         }

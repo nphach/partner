@@ -9,7 +9,13 @@ public class Loan {
     private final BigDecimal balance;
     private RepaymentPlan activePlan;
 
+    /**
+     * @throws IllegalArgumentException if the balance is not greater than zero (fixes D3)
+     */
     public Loan(String loanId, Borrower borrower, BigDecimal balance) {
+        if (balance == null || balance.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Loan balance must be greater than zero");
+        }
         this.loanId = loanId;
         this.borrower = borrower;
         this.balance = balance;
